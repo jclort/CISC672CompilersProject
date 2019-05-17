@@ -1,6 +1,6 @@
 # Makefile for Javacup compiler.
 # $ make - compiles all classes produces an MJ.jar in the testing directory.
-# $ make three - runs MJ.jar on all PA3 test cases.
+# $ make three||four||five - runs MJ.jar on all PA3||PA4||PA5 test cases.
 # $ make clean - removes all test files and .
 
 JAVA_CUP_RUNTIME = $(shell pwd)
@@ -20,6 +20,11 @@ FOUR_SRC = $(wildcard $(TEST_DIR)/PA4/*.java)
 FOUR_A = $(FOUR_SRC:.java=.ast.dot)
 FOUR_AST = $(wildcard $(TEST_DIR)/PA4/*.ast.dot)
 FOUR_PNG = $(FOUR_AST:.ast.dot=.png)
+
+FIVE_SRC = $(wildcard $(TEST_DIR)/PA5/*.java)
+FIVE_A = $(FIVE_SRC:.java=.ast.dot)
+FIVE_AST = $(wildcard $(TEST_DIR)/PA5/*.ast.dot)
+FIVE_PNG = $(FIVE_AST:.ast.dot=.png)
 
 PROG = MJ
 JCC = javac
@@ -53,6 +58,16 @@ four: $(FOUR_A)
 
 fourpng: $(FOUR_PNG)
 
+$(TEST_DIR)/PA5/%.ast.dot: $(TEST_DIR)/PA5/%.java
+	-java -jar MJ.jar $^
+
+$(TEST_DIR)/PA5/%.png: $(TEST_DIR)/PA5/%.ast.dot
+	dot -Tpng -o $^.png $^
+
+five: $(FIVE_A) 
+
+fivepng: $(FIVE_PNG)
+
 .PHONY:clean
 clean:
 	rm -rf $(SRC_DIR)/*.class $(SRC_DIR)/*/*.class $(SRC_DIR)/*/*/*.class
@@ -72,6 +87,7 @@ $(PROG).jar: $(SRC_DIR)/$(PROG)Driver.class
 	cp MJ.jar $(TEST_DIR)
 	cp MJ.jar $(TEST_DIR)/PA3
 	cp MJ.jar $(TEST_DIR)/PA4  
+	cp MJ.jar $(TEST_DIR)/PA5  
 
 #### mj parser
 $(PARSE_DIR)/mj.java: $(PARSE_DIR)/mj.cup
