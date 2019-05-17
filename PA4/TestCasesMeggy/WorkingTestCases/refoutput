@@ -1,0 +1,37 @@
+oracles/empty.java.s
+oracles/PA2bluedot.java.s
+Setting pixel (1,2) to BLUE
+oracles/PA3buttondot.java.s
+Setting pixel (7,7) to ORANGE
+Checking button A and returning false
+Checking button B and returning false
+Setting pixel (6,1) to ORANGE
+Setting pixel (6,1) to ORANGE
+Setting pixel (6,1) to ORANGE
+Delaying for 100 milliseconds
+Checking button A and returning false
+Checking button B and returning false
+Setting pixel (6,1) to ORANGE
+Setting pixel (6,1) to ORANGE
+Setting pixel (6,1) to ORANGE
+Delaying for 100 milliseconds
+Checking button A and returning false
+Checking button B and returning false
+Setting pixel (6,1) to ORANGE
+Setting pixel (6,1) to ORANGE
+Setting pixel (6,1) to ORANGE
+Delaying for 100 milliseconds
+Checking button A and returning false
+Checking button B and returning false
+Setting pixel (6,1) to ORANGE
+Setting pixel (6,1) to ORANGE
+Setting pixel (6,1) to ORANGE
+Delaying for 100 milliseconds
+oracles/PA3Test1.java.s
+Checking button B and returning false
+Getting pixel (0,0) ==>DARK
+oracles/PA3Test2.java.s
+Setting pixel (1,1) to BLUE
+oracles/PA3Test3.java.s
+Setting pixel (1,1) to BLUE
+oracles/test.java.s

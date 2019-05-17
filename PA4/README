@@ -1,0 +1,19 @@
+
+BUILDING
+make clean && make source && make all
+
+TEST CASES
+Part I: I added extra .in test cases to TestCases/ . You can test them by running ./regress.sh (if the outputs are the same diff will not print anything)
+Although I added tokens for the complete grammar I only have test cases for PA2
+
+Part II: I added program test cases for the compiler in compilerTestCases. You can run them with ./regress.sh. Since my error handling is different than the provided compiler, PA2Error.java produces a different message (mine just throws and error and prints to stderr)
+The testing consists of generating two assembly files for each program, one from my compiler and one from the starter code compiler. I then run each through MJSIM.jar and compare the outputs (diff will print nothing if the outputs are the same).
+
+
+ERROR HANDLING
+My compiler will output throw an error if you try to cast something bigger than a byte to a byte. That test case is PA2ByteCastError.java
+There will also be an error if you try to give a value higher than 8 to the setPixel function
+In both these cases no assembly file will be generated
+
+REFLECTION
+Once I figured out the cup syntax it wasn't too bad

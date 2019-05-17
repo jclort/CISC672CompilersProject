@@ -1,0 +1,53 @@
+digraph ASTGraph {
+0 [ label="Program" ];
+1 [ label="MainClass" ];
+0 -> 1
+2 [ label="BlockStatement" ];
+1 -> 2
+3 [ label="CallStatement" ];
+2 -> 3
+4 [ label="NewExp" ];
+3 -> 4
+5 [ label="IntLiteral\n3" ];
+3 -> 5
+6 [ label="CallStatement" ];
+2 -> 6
+7 [ label="NewExp" ];
+6 -> 7
+8 [ label="IntLiteral\n3" ];
+6 -> 8
+9 [ label="TopClassDecl" ];
+0 -> 9
+10 [ label="MethodDecl" ];
+9 -> 10
+11 [ label="IntType" ];
+10 -> 11
+12 [ label="Formal" ];
+10 -> 12
+13 [ label="IntType" ];
+12 -> 13
+14 [ label="MeggyToneStart" ];
+10 -> 14
+15 [ label="ToneLiteral\nMeggy.Tone.B3" ];
+14 -> 15
+16 [ label="IdLiteral\nduration" ];
+14 -> 16
+17 [ label="IntLiteral\n1" ];
+10 -> 17
+18 [ label="TopClassDecl" ];
+0 -> 18
+19 [ label="MethodDecl" ];
+18 -> 19
+20 [ label="VoidType" ];
+19 -> 20
+21 [ label="Formal" ];
+19 -> 21
+22 [ label="IntType" ];
+21 -> 22
+23 [ label="MeggyToneStart" ];
+19 -> 23
+24 [ label="ToneLiteral\nMeggy.Tone.B3" ];
+23 -> 24
+25 [ label="IdLiteral\nduration" ];
+23 -> 25
+}

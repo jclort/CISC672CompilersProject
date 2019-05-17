@@ -1,0 +1,31 @@
+digraph SymTable {
+	graph [rankdir="LR"];
+	node [shape=record];
+	0 [label=" <f0> Scope | <f1> mDict\[Functions\] "];
+	0:<f1> -> 1:<f0>;
+	1 [label=" <f0> ClassSTE | <f1> mName = Functions| <f2> mMain = false| <f3> mSuperClass = null| <f4> mScope "];
+	1:<f4> -> 2:<f0>;
+	2 [label=" <f0> Scope | <f1> mDict\[add\] | <f2> mDict\[f\] | <f3> mDict\[ff\] "];
+	2:<f1> -> 3:<f0>;
+	3 [label=" <f0> MethodSTE | <f1> mName = add| <f2> mSignature = (INT, INT) returns INT| <f3> mScope "];
+	3:<f3> -> 4:<f0>;
+	4 [label=" <f0> Scope | <f1> mDict\[this\] | <f2> mDict\[a\] | <f3> mDict\[b\] "];
+	4:<f1> -> 5:<f0>;
+	5 [label=" <f0> VarSTE | <f1> mName = this| <f2> mType = class_Functions;| <f3> mBase = Y| <f4> mOffset = 1"];
+	4:<f2> -> 6:<f0>;
+	6 [label=" <f0> VarSTE | <f1> mName = a| <f2> mType = INT| <f3> mBase = Y| <f4> mOffset = 3"];
+	4:<f3> -> 7:<f0>;
+	7 [label=" <f0> VarSTE | <f1> mName = b| <f2> mType = INT| <f3> mBase = Y| <f4> mOffset = 5"];
+	2:<f2> -> 8:<f0>;
+	8 [label=" <f0> MethodSTE | <f1> mName = f| <f2> mSignature = () returns BOOL| <f3> mScope "];
+	8:<f3> -> 9:<f0>;
+	9 [label=" <f0> Scope | <f1> mDict\[this\] "];
+	9:<f1> -> 10:<f0>;
+	10 [label=" <f0> VarSTE | <f1> mName = this| <f2> mType = class_Functions;| <f3> mBase = Y| <f4> mOffset = 1"];
+	2:<f3> -> 11:<f0>;
+	11 [label=" <f0> MethodSTE | <f1> mName = ff| <f2> mSignature = () returns BYTE| <f3> mScope "];
+	11:<f3> -> 12:<f0>;
+	12 [label=" <f0> Scope | <f1> mDict\[this\] "];
+	12:<f1> -> 13:<f0>;
+	13 [label=" <f0> VarSTE | <f1> mName = this| <f2> mType = class_Functions;| <f3> mBase = Y| <f4> mOffset = 1"];
+}
