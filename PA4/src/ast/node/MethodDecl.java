@@ -137,7 +137,6 @@ public final class MethodDecl extends Node
 
     public LinkedList<Formal> getFormals()
     {
-        Collections.reverse(this._formals_);
         return this._formals_;
     }
 

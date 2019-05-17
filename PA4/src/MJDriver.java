@@ -9,13 +9,14 @@
  * The default is the interpreter.
  *
  */
-import java.io.FileReader;
-import java.io.PrintWriter;
-import java_cup.runtime.*;
+import java.io.*;
+
 import mjparser.*;
 import ast_visitors.*;
-import ast.node.Program;
+import ast.node.*;
+import ast.visitor.*;
 import symtable.*;
+
 public class MJDriver {
 
       private static void usage() {
@@ -47,22 +48,18 @@ public class MJDriver {
           System.out.println("Driver finds input filename: " + parser.programName);
 
           // and parse
-          Symbol sym  = parser.parse();
-          //Symbol symbol = (Symbol) ret;
-          Program ast_root = (Program) sym.value;
-          //System.out.println( ast_root);
-          //System.out.println(ast_root.lexeme);
+          ast.node.Node ast_root = (ast.node.Node)parser.parse().value;
 
-
-          // print ast to file
+          // Print ast to file.
           java.io.PrintStream astout =
             new java.io.PrintStream(
-                new java.io.FileOutputStream(filename + ".myast.dot"));
+                new java.io.FileOutputStream(filename + ".ast.dot"));
           ast_root.accept(new DotVisitor(new PrintWriter(astout)));
-          System.out.println("Printing AST to " + filename + ".myast.dot");
-
-
-            DeclarationTable dt = new DeclarationTable();
+          System.out.println("Printing AST to " + filename + ".ast.dot");
+          
+          // create the symbol table
+         
+          DeclarationTable dt = new DeclarationTable();
 
             ast_root.accept(dt);
             CheckTypes ct = new CheckTypes(new SymTable(),dt);
@@ -73,22 +70,26 @@ public class MJDriver {
                             new java.io.FileOutputStream(filename + ".s"));
             ast_root.accept(new ASMGenerator(filename,ct));
             System.out.println("Printing Atmel assembly to " + filename + ".s");
-/*
-          // create the symbol table
-          BuildSymTable stVisitor = new BuildSymTable();
+
+
+         /*
+          STBuilder stVisitor = new STBuilder();
           ast_root.accept(stVisitor);
           symtable.SymTable globalST = stVisitor.getSymTable();
           
-          // print ast to file
+          
+          // print symbol table to file
           java.io.PrintStream STout =
             new java.io.PrintStream(
                 new java.io.FileOutputStream(filename + ".ST.dot"));
           System.out.println("Printing symbol table to " + filename + ".ST.dot");
           globalST.outputDot(STout);
-
+              
+          
           // perform type checking 
           ast_root.accept(new CheckTypes(globalST));
           
+          /*
           // Determine whether to do register allocation or not.
           if ( args.length == 2 && args[0].equals("--regalloc") ) {
               // trying out register allocation
@@ -107,15 +108,68 @@ public class MJDriver {
             // determine how to layout variables in AVR program
             ast_root.accept(new AVRallocVars(globalST));
           }
-*/
-          // generate AVR code that evaluates the program
+          
+          
+          // Create assembly file. 
+          java.io.PrintStream avrsout =
+              new java.io.PrintStream(
+                      new java.io.FileOutputStream(filename + ".s"));
 
+          // Generate the prologue. 
+          System.out.println("Generate prolog using avrH.rtl.s");
+          InputStream mainPrologue=null;
+          BufferedReader reader=null;
+          try {
+            mainPrologue = new FileInputStream("./Testing/avrH.rtl.s");
+              reader = new BufferedReader(new InputStreamReader(mainPrologue));
 
+              String line = null;
+              while ((line = reader.readLine()) != null) {
+                avrsout.println(line);
+              }
+          } catch ( Exception e2) {
+            e2.printStackTrace();
+          } finally{
+              try{
+                if (mainPrologue!=null) mainPrologue.close();
+                if (reader!=null) reader.close();
+              } catch (IOException e) {
+                e.printStackTrace();
+              }
+          }
+          
+          // Generate AVR code that evaluates the program.
+          ast_root.accept(new AVRgenVisitor(avrsout));
+          System.out.println("Printing Atmel assembly to " + filename + ".s");
 
+          // Generate the epilogue. 
+          System.out.println("Generate epilogue using avrF.rtl.s");
+          InputStream mainEpilogue=null;
+          reader=null;
+          try {
+            mainEpilogue = new FileInputStream("./Testing/avrF.rtl.s");
+              reader = new BufferedReader(new InputStreamReader(mainEpilogue));
+
+              String line = null;
+              while ((line = reader.readLine()) != null) {
+                avrsout.println(line);
+              }
+          } catch ( Exception e2) {
+            e2.printStackTrace();
+          } finally{
+              try{
+                if (mainEpilogue!=null) mainEpilogue.close();
+                if (reader!=null) reader.close();
+              } catch (IOException e) {
+                e.printStackTrace();
+              }
+          }
+          avrsout.flush();
+          */
         } catch(exceptions.SemanticException e) {
             System.err.println(e.getMessage());
             System.exit(1);
-       
+        
         } catch (Exception e) {
             e.printStackTrace();
             System.exit(1);
