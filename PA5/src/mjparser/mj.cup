@@ -98,7 +98,8 @@ non terminal IType type;
 
 
 /* Declare precedence and associativity  here */
-precedence left EQUAL, AND;
+precedence left AND;
+precedence left EQUAL, LT;
 precedence left PLUS, MINUS;
 precedence left TIMES;
 precedence right UMINUS;
