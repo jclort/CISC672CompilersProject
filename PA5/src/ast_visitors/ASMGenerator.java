@@ -347,6 +347,12 @@ public class ASMGenerator extends DepthFirstVisitor {
                 varSTE = ste;
             }
         }
+        LinkedList<VarSTE> classVarSTELinkedList = ct.varTable.get(scope.getCls());
+        for (VarSTE ste : classVarSTELinkedList) {
+            if(ste.name.equals(node.getLexeme())){
+                varSTE = ste;
+            }
+        }
         assert varSTE != null: node.getLexeme() + " entry not found in varTable";
         asmOut.println("\tldd r25, Y + "+(varSTE.offset+2));
         asmOut.println("\tldd r24, Y + "+(varSTE.offset+1));

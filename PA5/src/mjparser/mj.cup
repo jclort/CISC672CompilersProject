@@ -179,8 +179,8 @@ formal ::=
 	;
 
 statement_list ::= 
-	statement_list:list statement:s 
-		{: if (s != null) {list.add(s);} RESULT = list; :}
+	statement:s statement_list:list  
+		{: if (s != null) {list.addFirst(s);} RESULT = list; :}
 	| 
 		{: RESULT = new LinkedList<IStatement>(); :}                             
 	;
@@ -279,7 +279,6 @@ type ::=
 		{: RESULT = new ToneType(t.line, t.pos); :}
 	| ID:id
 		{: RESULT = new  ClassType(id.line, id.pos, id.lexeme); :}
-	// TODO Type goes to Identifier.
 	;
 
 

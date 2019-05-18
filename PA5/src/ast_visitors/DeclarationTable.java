@@ -22,6 +22,21 @@ public class DeclarationTable extends DepthFirstVisitor {
         scope = new Scope("Global", "");
     }
 
+    public void inVarDecl(VarDecl node)
+    {
+    	LinkedList<VarSTE> varSTELinkedList = varTable.get(scope.getScope());
+        for (VarSTE ste: varSTELinkedList){
+
+            if(ste.name.equals(node.getName())){
+                throw new SemanticException(
+                        "Variable "+node.getName() + " redefined",
+                        node.getLine(),
+                        node.getPos());
+            }
+        }
+        varSTELinkedList.add(new VarSTE(node.getName(), node.getType(),"Y", 0));
+    }
+
 
     public void inFormal(Formal node) {
         assert varTable.get(scope.getScope()) != null : "varTable for "+ scope.getScope()+ " is not set up";

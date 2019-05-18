@@ -303,8 +303,15 @@ public class CheckTypes extends DepthFirstVisitor {
     }
 
     public void outIdLiteral(IdLiteral node) {
-        LinkedList<VarSTE> steList = varTable.get(scope.getScope());
-        for (VarSTE ste : steList) {
+        LinkedList<VarSTE> methodSteList = varTable.get(scope.getScope());
+        for (VarSTE ste : methodSteList) {
+            if (ste.name.equals(node.getLexeme())) {
+                mCurrentST.setExpType(node, getType(ste.type));
+                return;
+            }
+        }
+        LinkedList<VarSTE> classSteList = varTable.get(scope.getCls());
+        for (VarSTE ste : classSteList) {
             if (ste.name.equals(node.getLexeme())) {
                 mCurrentST.setExpType(node, getType(ste.type));
                 return;
@@ -548,7 +555,6 @@ public class CheckTypes extends DepthFirstVisitor {
     }
 
     public void inTopClassDecl(TopClassDecl node) {
-
         scope.setCls(node.getName());
     }
 
@@ -563,7 +569,10 @@ public class CheckTypes extends DepthFirstVisitor {
     }
 
     public void outVarDecl(VarDecl node) {
-        defaultOut(node);
+        if (node.getType() instanceof ClassType) {
+            System.out.println("test");
+            classNameMap.put(node, ((ClassType)node.getType()).getName());
+        }
     }
 
     public void outWhileStatement(WhileStatement node) {
