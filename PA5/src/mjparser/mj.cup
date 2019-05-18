@@ -1,4 +1,3 @@
-
 package mjparser;
 import java_cup.runtime.*;
 import java.util.*;
@@ -91,6 +90,8 @@ non terminal LinkedList<IStatement> statement_list;
 non terminal IStatement statement;
 non terminal LinkedList<Formal> formal_list;
 non terminal Formal formal;
+non terminal LinkedList<VarDecl> var_list;
+non terminal VarDecl var;
 non terminal LinkedList<IExp> expression_list;
 non terminal IExp exp;
 non terminal IType type;
@@ -133,8 +134,20 @@ class_list ::=
 
 
 class ::=
-	CLASS:c ID:id LBRACE method_list:ml RBRACE
-		{: RESULT = new TopClassDecl(c.line, c.pos, id.lexeme, new LinkedList<VarDecl>(), ml); :}
+	CLASS:c ID:id LBRACE var_list:vl method_list:ml RBRACE
+		{: RESULT = new TopClassDecl(c.line, c.pos, id.lexeme, vl, ml); :}
+	;
+
+var_list ::=
+	var_list:list var:v 
+		{: if (v != null) {list.add(v);} RESULT = list; :}
+	|
+		{: RESULT = new LinkedList<VarDecl>(); :}
+	;
+
+var ::=
+	type:t ID:id SEMI
+		{: RESULT = new VarDecl(id.line, id.pos, t, id.lexeme); :}
 	;
 
 method_list ::=
@@ -145,10 +158,10 @@ method_list ::=
 	;
 
 method ::=
-	PUBLIC:m type:t ID:id LPAREN formal_list:fl RPAREN LBRACE statement_list:sl RBRACE
-		{: RESULT = new MethodDecl(m.line, m.pos, t, id.lexeme, fl, new LinkedList<VarDecl>(), sl); :}	
-	| PUBLIC:m type:t ID:id LPAREN formal_list:fl RPAREN LBRACE statement_list:sl RETURN exp:e SEMI RBRACE
-		{: RESULT = new MethodDecl(m.line, m.pos, t, id.lexeme, fl, new LinkedList<VarDecl>(), sl, e); :}
+	PUBLIC:m type:t ID:id LPAREN formal_list:fl RPAREN LBRACE var_list:vl statement_list:sl RBRACE
+		{: RESULT = new MethodDecl(m.line, m.pos, t, id.lexeme, fl, vl, sl); :}	
+	| PUBLIC:m type:t ID:id LPAREN formal_list:fl RPAREN LBRACE var_list:vl statement_list:sl RETURN exp:e SEMI RBRACE
+		{: RESULT = new MethodDecl(m.line, m.pos, t, id.lexeme, fl, vl, sl, e); :}
 	;
 
 formal_list ::=
@@ -189,6 +202,8 @@ statement ::=
 		{: RESULT = new WhileStatement(op.line, op.pos, e, s); :}
 	| exp:e DOT:d ID:id LPAREN expression_list:el RPAREN SEMI
 		{: RESULT = new CallStatement(d.line, d.pos, e, id.lexeme, el); :}
+	| ID:id ASSIGN exp:e SEMI
+		{: RESULT = new AssignStatement(id.line, id.pos, id.lexeme, e); :}
     ;
 
 expression_list ::=
@@ -262,6 +277,9 @@ type ::=
 		{: RESULT = new ButtonType(t.line, t.pos); :}
 	| MEGGYTONE:t
 		{: RESULT = new ToneType(t.line, t.pos); :}
+	| ID:id
+		{: RESULT = new  ClassType(id.line, id.pos, id.lexeme); :}
+	// TODO Type goes to Identifier.
 	;
 
 
