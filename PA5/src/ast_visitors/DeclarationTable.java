@@ -162,33 +162,6 @@ public class DeclarationTable extends DepthFirstVisitor {
     }
 
     public void outProgram(Program node) {
-      /*  for (String name : classTable.keySet()) {
-            System.out.println(name);
-            LinkedList<ClassSTE> value = classTable.get(name);
-            for (ClassSTE ste : value) {
-
-                System.out.println("\t" + ste.name);
-            }
-        }
-
-        for (String name : methodTable.keySet()) {
-            System.out.println(name);
-            LinkedList<MethodSTE> value = methodTable.get(name);
-            for (MethodSTE ste : value) {
-
-                System.out.println("\t" + ste.returnType);
-            }
-        }
-        for (String name : varTable.keySet()) {
-            System.out.println(name);
-            LinkedList<VarSTE> value = varTable.get(name);
-            for (VarSTE ste : value) {
-
-                System.out.println("\t" + ste.type);
-                System.out.println("\t" + ste.type);
-            }
-        }*/
-
     }
 
 

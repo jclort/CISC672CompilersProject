@@ -173,6 +173,10 @@ public class ASMGenerator extends DepthFirstVisitor {
         LinkedList<MethodSTE> methodSTELinkedList =
                 ct.methodTable.get(ct.classNameMap.get(node.getExp()));
 
+         if(methodSTELinkedList == null) {
+            methodSTELinkedList = ct.methodTable.get(ct.classTypeMap.get(((ILiteral)node.getExp()).getLexeme())); 
+        }
+
         MethodSTE callSTE = null;
         for (MethodSTE ste : methodSTELinkedList) {
             //System.out.println(ste.name +" compared to "+node.getId());
@@ -234,6 +238,9 @@ public class ASMGenerator extends DepthFirstVisitor {
         LinkedList<MethodSTE> methodSTELinkedList =
                 ct.methodTable.get(ct.classNameMap.get(node.getExp()));
 
+        if(methodSTELinkedList == null) {
+            methodSTELinkedList = ct.methodTable.get(ct.classTypeMap.get(((ILiteral)node.getExp()).getLexeme())); 
+        }
         MethodSTE callSTE = null;
         for (MethodSTE ste : methodSTELinkedList) {
             //System.out.println(ste.name +" compared to "+node.getId());
@@ -744,7 +751,21 @@ public class ASMGenerator extends DepthFirstVisitor {
     }
 
     public void outNewExp(NewExp node) {
-        defaultOut(node);
+        int size = -1;
+        LinkedList<ClassSTE> classList = ct.classTable.get("Global");
+        for (ClassSTE ste : classList) {
+            if (ste.name.equals(node.getId())) {
+                size = ste.getSize();
+            }
+        }
+        assert size >= 0 : "Class size not found";
+        asmOut.println("# NewExp");
+        asmOut.println("ldi r24, lo8("+size+")");
+        asmOut.println("ldi r25, hi8("+size+")");
+        asmOut.println("call  malloc");
+        asmOut.println("# Push object address");
+        asmOut.println("push r24");
+        asmOut.println("push r25");
     }
 
     public void outNegExp(NegExp node) {

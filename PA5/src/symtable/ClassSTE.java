@@ -6,11 +6,20 @@ import exceptions.InternalException;
 
 public class ClassSTE extends STE{
 
+	private int size;
 
     public ClassSTE(){
-
+    	this.size = 0;
     }
     public ClassSTE(String name){
         this.name = name;
+    }
+
+    public int getSize() {
+    	return size;
+    }
+
+    public void upSize() {
+    	size += 2;
     }
 }

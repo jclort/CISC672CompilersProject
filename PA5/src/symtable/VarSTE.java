@@ -4,7 +4,8 @@ import ast.node.*;
 
 import exceptions.InternalException;
 
-public class VarSTE extends STE{
+public class VarSTE extends STE 
+{
 
     public IType type;
     public String base;
