@@ -7,6 +7,7 @@ import exceptions.InternalException;
 public class ClassSTE extends STE{
 
 	private int size;
+    public int location;
 
     public ClassSTE(){
     	this.size = 0;
