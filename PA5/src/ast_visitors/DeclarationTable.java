@@ -29,7 +29,7 @@ public class DeclarationTable extends DepthFirstVisitor {
 
             if(ste.name.equals(node.getName())){
                 throw new SemanticException(
-                        "Variable "+node.getName() + " redefined",
+                        "Redefined symbol "+node.getName(),
                         node.getLine(),
                         node.getPos());
             }
