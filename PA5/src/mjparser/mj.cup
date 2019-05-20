@@ -108,6 +108,7 @@ precedence right BYTE;
 precedence right LPAREN;
 precedence left RPAREN;
 precedence left ELSE;
+precedence left DOT;
 
 
 /* Meggy Java Grammar */

@@ -37,6 +37,7 @@ public class CheckTypes extends DepthFirstVisitor {
     public HashMap<String, LinkedList<ClassSTE>> classTable;
     private Scope scope;
     public HashMap<Node, String> classNameMap;
+    public HashMap<String, String> classTypeMap;
 
     public CheckTypes(SymTable st, DeclarationTable dt) {
         if (st == null) {
@@ -48,6 +49,7 @@ public class CheckTypes extends DepthFirstVisitor {
         this.classTable = dt.getClassTable();
         this.classNameMap = new HashMap<Node, String>();
         this.scope = new Scope();
+        this.classTypeMap = new HashMap<String, String>();
     }
 
     //========================= Overriding the visitor interface
@@ -141,6 +143,9 @@ public class CheckTypes extends DepthFirstVisitor {
         LinkedList<MethodSTE> methodSTELinkedList;
         methodSTELinkedList = methodTable.get(classNameMap.get(node.getExp()));
         if(methodSTELinkedList == null) {
+            methodSTELinkedList = methodTable.get(classTypeMap.get(((ILiteral)node.getExp()).getLexeme())); 
+        }
+        if(methodSTELinkedList == null) {
             throw new SemanticException(
                     node.getId() + ": Can't resolve scope",
                     node.getExp().getLine(),
@@ -209,9 +214,11 @@ public class CheckTypes extends DepthFirstVisitor {
         //assert expType.classType.length() > 0 : "Class type not set";
         LinkedList<MethodSTE> methodSTELinkedList;
 
-           // System.out.println(classNameMap.get(node.getExp()));
-
-            methodSTELinkedList = methodTable.get(classNameMap.get(node.getExp()));
+        // System.out.println(classNameMap.get(node.getExp()));
+        methodSTELinkedList = methodTable.get(classNameMap.get(node.getExp()));
+        if(methodSTELinkedList == null) {
+            methodSTELinkedList = methodTable.get(classTypeMap.get(((ILiteral)node.getExp()).getLexeme())); 
+        }
         if(methodSTELinkedList == null) {
             throw new SemanticException(
                     node.getId() + ": Can't resolve scope",
@@ -570,8 +577,7 @@ public class CheckTypes extends DepthFirstVisitor {
 
     public void outVarDecl(VarDecl node) {
         if (node.getType() instanceof ClassType) {
-            System.out.println("test");
-            classNameMap.put(node, ((ClassType)node.getType()).getName());
+            classTypeMap.put(node.getName(), ((ClassType)node.getType()).getName());
         }
     }
 
