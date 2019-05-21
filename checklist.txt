@@ -1,8 +1,17 @@
 Deliverables:
-Add PA5 grammar rules to our parser.
-Update to the visitors to handle new features.
-Have ST Builder annotate instance and local variables to include offset and base information.
-Type check for objects, instance variables, and local variables.
+DONE: Add PA5 grammar rules to our parser.
+DONE: Update to the visitors to handle new features.
+DONE: Have ST Builder annotate instance and local variables to include offset and base information.
+DONE: Type check for objects, instance variables, and local variables.
 Produce a .java.s file that can be run on the AVR simulator.
-Produce errors for doubly defined symbols.
+DONE: Produce errors for doubly defined symbols.
 	ex: [23,16] Redefined symbol foo
+
+Code geneation for PA5 grammar: 
+	DONE: this in parameters and expression
+	Assignment
+	DONE: New class objects
+	Local variable uses and definitions
+	Equality comparison of class refs
+	Class refs
+	Call Statement change.
