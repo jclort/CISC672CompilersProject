@@ -78,6 +78,8 @@ clean:
 	rm -rf javacup.dump
 	rm -rf $(TEST_DIR)/MJ.jar
 	rm -rf $(TEST_DIR)/*/*.dot $(TEST_DIR)/*/*.png $(TEST_DIR)/*/*.s  $(TEST_DIR)/*/*.jar
+	rm -rf $(TEST_DIR)/PA4/mjsimPictures ; rm -rf $(TEST_DIR)/PA4/output.log
+	rm -rf $(TEST_DIR)/PA5/mjsimPictures ; rm -rf $(TEST_DIR)/PA5/output.log
 
 ### Final jar files.
 $(PROG).jar: $(SRC_DIR)/$(PROG)Driver.class
@@ -88,6 +90,8 @@ $(PROG).jar: $(SRC_DIR)/$(PROG)Driver.class
 	cp MJ.jar $(TEST_DIR)/PA3
 	cp MJ.jar $(TEST_DIR)/PA4  
 	cp MJ.jar $(TEST_DIR)/PA5  
+	cp MJSIM.jar $(TEST_DIR)/PA4 ; cp reference_compiler.jar $(TEST_DIR)/PA4
+	cp MJSIM.jar $(TEST_DIR)/PA5 ; cp reference_compiler.jar $(TEST_DIR)/PA5
 
 #### mj parser
 $(PARSE_DIR)/mj.java: $(PARSE_DIR)/mj.cup
