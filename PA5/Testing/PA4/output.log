@@ -1,5 +1,5 @@
-2019-05-21 14:20:25,095 [main] FATAL ui.AVRSim - Encountered error during runtime.
-instructions.RuntimeError: Hit max number of jumps for label: returnTrueLT0:
+2019-05-21 14:29:35,068 [main] FATAL ui.AVRSim - Encountered error during runtime.
+instructions.RuntimeError: Hit max number of jumps for label: MJ_L22:
 	at machine.MachineState.executeInstruction(MachineState.java:310)
 	at ui.AVRSim.runAssem(AVRSim.java:97)
 	at ui.AVRSim.run(AVRSim.java:82)
