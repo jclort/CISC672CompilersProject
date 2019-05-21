@@ -628,9 +628,8 @@ public class ASMGenerator extends DepthFirstVisitor {
             node.getType().accept(this);
         }
         {
-            List<Formal> copy = new ArrayList<Formal>(node.getFormals());
-            int offset = 2;
-            for(Formal e : copy)
+            int offset = 2 * node.getFormals().size();
+            for(Formal e : node.getFormals())
             {
                 //find in varste list,update offset, then in idlit move from the offset to 24:25
                 assert ct.varTable.get(scope.getScope()) != null : scope.getScope() + " MethodDecl scope not found in varTable";
@@ -644,7 +643,7 @@ public class ASMGenerator extends DepthFirstVisitor {
                 assert varSTE != null: node.getName() + " entry not found in varTable";
                 varSTE.offset = offset;
                 //offset is 2 bytes since each formal is two bytes
-                offset += 2;
+                offset -= 2;
                 e.accept(this);
             }
         }
