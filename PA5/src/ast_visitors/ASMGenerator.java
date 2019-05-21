@@ -361,8 +361,8 @@ public class ASMGenerator extends DepthFirstVisitor {
             }
         }
         assert varSTE != null: node.getLexeme() + " entry not found in varTable";
-        asmOut.println("\tldd r25, Y + "+(varSTE.offset+2));
-        asmOut.println("\tldd r24, Y + "+(varSTE.offset+1));
+        asmOut.println("\tldd r25, " + varSTE.base +" + "+(varSTE.offset+2));
+        asmOut.println("\tldd r24, "+ varSTE.base +" + "+(varSTE.offset+1));
 
     }
 
