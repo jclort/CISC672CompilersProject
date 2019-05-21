@@ -37,7 +37,7 @@ public class DeclarationTable extends DepthFirstVisitor {
         
         LinkedList<ClassSTE> classSteList = classTable.get("Global");
             for (ClassSTE ste : classSteList) {
-                if (ste.name.equals(node.getScope())) {
+                if (ste.name.equals(scope)) {
                     varSTELinkedList.add(new VarSTE(node.getName(), node.getType(),"Y", ste.getSize()));
                     ste.upSize();
                     return;
@@ -55,7 +55,7 @@ public class DeclarationTable extends DepthFirstVisitor {
 
             if(ste.name.equals(node.getName())){
                 throw new SemanticException(
-                        "Paramter "+node.getName() + " redefined",
+                        "Redefined symbol "+node.getName(),
                         node.getLine(),
                         node.getPos());
             }
