@@ -147,7 +147,7 @@ public class ASMGenerator extends DepthFirstVisitor {
         //ct.methodTable.get(ct.classNameMap.get(node.getExp()));
         asmOut.println("\tcall " + ct.classNameMap.get(node.getExp())+node.getId());
         //return val in r24:25
-        asmOut.println("\tldi r20," + node.getArgs().size());
+        asmOut.println("\tldi r20," + (node.getArgs().size())+2);
         asmOut.println("\tpop r28");
         asmOut.println("\tpop r29");
         //pop off the args that were pushed before the calls
@@ -855,7 +855,12 @@ public class ASMGenerator extends DepthFirstVisitor {
     }
 
     public void outThisExp(ThisLiteral node) {
-        defaultOut(node);
+
+        asmOut.println("# This literal handle");
+        asmOut.println("ldd r31, Y + 2");
+        asmOut.println("ldd r30, Y + 1");
+        asmOut.println("push r31");
+        asmOut.println("push r30");
     }
 
     public void inTopClassDecl(TopClassDecl node) {
