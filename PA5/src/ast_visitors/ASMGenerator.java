@@ -147,7 +147,7 @@ public class ASMGenerator extends DepthFirstVisitor {
         //ct.methodTable.get(ct.classNameMap.get(node.getExp()));
         asmOut.println("\tcall " + ct.classNameMap.get(node.getExp())+node.getId());
         //return val in r24:25
-        asmOut.println("\tldi r20," + (node.getArgs().size())+2);
+        asmOut.println("\tldi r20," + (node.getArgs().size()+2));
         asmOut.println("\tpop r28");
         asmOut.println("\tpop r29");
         //pop off the args that were pushed before the calls
@@ -170,6 +170,7 @@ public class ASMGenerator extends DepthFirstVisitor {
         assert node.getExp() != null : "Code generator-callexp exp null";
 
         node.getExp().accept(this);
+	//asmOut.println("push	r25\npush	r24");
         LinkedList<MethodSTE> methodSTELinkedList =
                 ct.methodTable.get(ct.classNameMap.get(node.getExp()));
 
@@ -210,7 +211,7 @@ public class ASMGenerator extends DepthFirstVisitor {
         callCount++;
         asmOut.println("\tcall " + ct.classNameMap.get(node.getExp())+node.getId());
         //return val in r24:25
-        asmOut.println("\tldi r20," + node.getArgs().size());
+        asmOut.println("\tldi r20," + (node.getArgs().size() + 1));
         //pop off the args that were pushed before the calls
         asmOut.println("\tpop r28");
         asmOut.println("\tpop r29");
